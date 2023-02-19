@@ -1,0 +1,10 @@
+import datetime
+day1 = int(input())
+month1 = int(input())
+year1 = int(input())
+day2 = int(input())
+month2 = int(input())
+year2 = int(input())
+date1 = datetime.date(year1, month1, day1)
+date2 = datetime.date(year2, month2, day2)
+print(int((date2 - date1).total_seconds()))
