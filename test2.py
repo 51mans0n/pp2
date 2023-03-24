@@ -1,8 +1,4 @@
-class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        for i in range(len(nums)):
-            for j in range(len(nums)):
-                if i == j:
-                    continue
-                if nums[i] + nums[j] == target:
-                    return(i, j)
+clock12 = dict(zip(range(12), range(0, 360, 30)))
+print(clock12)
+clock60 = dict(zip(range(60), range(0, 360, 6)))
+print(clock60)
