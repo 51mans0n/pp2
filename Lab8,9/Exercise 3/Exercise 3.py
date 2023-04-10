@@ -11,7 +11,7 @@ red = (255, 0, 0)
 
 # Set a Caption
 pygame.display.set_caption('Paint')
-icon = pygame.image.load('Lab8\Exercise 3\Images\icon.png')
+icon = pygame.image.load('Lab8,9\Exercise 3\Images\icon.png')
 pygame.display.set_icon(icon)
 
 def main():
