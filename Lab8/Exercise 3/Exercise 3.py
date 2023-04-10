@@ -1,219 +1,97 @@
-
-# importing libraries
-
 import pygame
-import time
-import random
-import os
-import math
 
-# initialization
+# Color parametres
+eraser = (255, 255, 255)
+white = (255, 255, 255)
+black = (0, 0, 0)
+green = (34, 139, 34)
+blue = (0, 0, 255)
+yellow = (255, 255, 0)
+red = (255, 0, 0)
 
-pygame.init()
-
-# setting
-
-height, width = 500, 500
-screen = pygame.display.set_mode((width, height))
+# Set a Caption
 pygame.display.set_caption('Paint')
 icon = pygame.image.load('Lab8\Exercise 3\Images\icon.png')
 pygame.display.set_icon(icon)
-clock = pygame.time.Clock()
-fps = 60
-my_font = pygame.font.SysFont('', 25)
-choosed = "NOTHING"
-palette = "white"
-position = (0, 0)
-Check = True
 
-# colors
-
-black = (0, 0, 0)
-white = (255, 255, 255)
-red = (255, 0, 0)
-blue = (0, 255, 0)
-lime = (0, 0, 255)
-yellow = (255, 255, 0)
-cyan = (0, 255, 255)
-magenta = (255, 0, 255)
-green = (0, 128, 0)
-gray = (128, 128, 128)
-maroon = (128, 0, 0)
-olive = (128, 128, 0)
-purple = (128, 0, 128)
-teal = (0, 128, 128)
-navy = (0, 0, 128)
-brown = (139, 69, 19)
-indigo = (75, 0, 130)
-current_color = white
-color_of_panel = (176, 224, 230)
-
-# groups of colors
-
-shades_of_red = [red, maroon, purple, magenta]
-shades_of_blue = [blue, cyan, navy, indigo]
-shades_of_green = [green, lime, teal, olive]
-basic_colors = [black, white, gray, brown]
-list_of_colors = [basic_colors, shades_of_red,
-                  shades_of_green, shades_of_blue,]
-
-# function for circle
-
-
-def circle(display, color, coordinate, radius):
-    pygame.draw.circle(display, color, coordinate, radius)
-
-
-# function for rectangle
-
-def rectangle(display, color, x, y, width, height):
-    pygame.draw.rect(display, color, pygame.Rect(x, y, width, height))
-
-
-# function for ellipse
-
-def ellipse(display, color, x, y, width, height):
-    pygame.draw.ellipse(display, color, pygame.Rect(x, y, width, height))
-
-# function for line
-
-
-def line(display, color, start_position, end_position):
-    pygame.draw.line(display, color, start_position, end_position)
-
-# palette
-
-
-def panel_of_palette():
-    surface = pygame.Surface((80, 80))
-    for block in range(4):
-        for color in range(4):
-            pygame.draw.rect(
-                surface, list_of_colors[block][color], pygame.Rect(20 * color, 20 * block, 16, 16))
-    screen.blit(surface, (420, 100))
-    pygame.display.update()
-
-
-# setting the display
-
-
-def control_panel():
-
-    # loading images
-
-    image_of_rectangle = pygame.image.load("Lab8/Exercise 3/Images/rectangle.jpg")
-    image_of_circle = pygame.image.load("Lab8/Exercise 3/Images/circle.jpg")
-    image_of_ellipse = pygame.image.load("Lab8/Exercise 3/Images/ellipse.jpg")
-    image_of_line = pygame.image.load("Lab8/Exercise 3/Images/line.jpg")
-    image_of_palette = pygame.image.load("Lab8/Exercise 3/Images/palette.jpg")
-
-    # scaling images
-
-    image_of_rectangle = pygame.transform.scale(image_of_rectangle, (100, 100))
-    image_of_circle = pygame.transform.scale(image_of_circle, (100, 100))
-    image_of_ellipse = pygame.transform.scale(image_of_ellipse, (100, 100))
-    image_of_line = pygame.transform.scale(image_of_line, (100, 100))
-    image_of_palette = pygame.transform.scale(image_of_palette, (100, 100))
-
-    # borders
-    pygame.draw.rect(screen, white, pygame.Rect(0, 0, 500, 100))
-    border = pygame.draw.rect(screen, black, pygame.Rect(0, 99, width, 1))
-    for i in range(width):
-        if i % 100 == 0:
-            pygame.draw.rect(screen, black, pygame.Rect(i, 0, 1, 100))
-    pygame.draw.circle(
-        screen, current_color, (438, 59), 7)
-    # drawing images
-
-    screen.blit(image_of_rectangle, (0, 0))
-    screen.blit(image_of_circle, (100, 0))
-    screen.blit(image_of_ellipse, (200, 0))
-    screen.blit(image_of_line, (300, 0))
-    screen.blit(image_of_palette, (400, 0))
-
-    pygame.display.update()
-
-# main loop
-
-
-screen.fill(white)
-exit = True
-StartDrawing = False
-while exit:
-
-    # main condition
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            exit = False
-
-        # work with mouse
-
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-
-            position = pygame.mouse.get_pos()
-            StartDrawing = True
-
-            # functions
-
-if position[1] <= 100:
-                StartDrawing = False
-                if position[0] >= 0 and position[0] < 100:
-                    choosed = "Rectangle"
-                if position[0] >= 100 and position[0] < 200:
-                    choosed = "Circle"
-                if position[0] >= 200 and position[0] < 300:
-                    choosed = "Ellipse"
-                if position[0] >= 300 and position[0] < 400:
-                    choosed = "Line"
-                if position[0] >= 400 and position[0] <= 500:
-                    choosed = "Palette"
-                    check = False
-
-        # Choosing the color
+def main():
+    # Initializing pygame
+    pygame.init()
+    screen = pygame.display.set_mode((640, 480))
+    clock = pygame.time.Clock()
+    
+    # Start parametres
+    screen.fill(white)
+    radius = 8
+    mode = black
+    last_pos = None
+    
+    # Main loop
+    while True:
+        # Handle events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return
+            
+                # Press-key checker
+                if event.key == pygame.K_r:
+                    mode = red
+                elif event.key == pygame.K_g:
+                    mode = green
+                elif event.key == pygame.K_b:
+                    mode = blue
+                elif event.key == pygame.K_y:
+                    mode = yellow
+                elif event.key == pygame.K_BACKSPACE:
+                    mode = eraser
+                elif event.key == pygame.K_w:
+                    drawRectangle(screen, pygame.mouse.get_pos(), 200, 100, mode)
+                elif event.key == pygame.K_c:
+                    drawCircle(screen, pygame.mouse.get_pos(), mode)
+            
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                # Start a new line
+                last_pos = pygame.mouse.get_pos()
+            
+            if event.type == pygame.MOUSEMOTION and event.buttons[0]:
+                # draw a line from the last point to the current point
+                if last_pos is not None:
+                    start_pos = last_pos
+                    end_pos = pygame.mouse.get_pos()
+                    drawLineBetween(screen, start_pos, end_pos, radius, mode)
+                    last_pos = end_pos
         
-elif event.type == pygame.MOUSEMOTION:
-            if StartDrawing:
-                direction = event.pos
-                x = direction[0]-position[0]
-                y = direction[1]-position[1]
-                if (position[0]+x < 101):
-                    x = 101
-                if (position[1]+y < 101):
-                    y = 101
-                if choosed == "Rectangle":
-                    rectangle(screen, current_color,
-                              position[0], position[1], x, y)
-                if choosed == "Circle":
-                    circle(screen, current_color, position, math.sqrt(
-                        math.pow((position[0]-x), 2)+math.pow((position[1]-y), 2)))
-                if choosed == "Ellipse":
-                    ellipse(screen, current_color,
-                            position[0], position[1], x, y)
-                if choosed == "Line":
-                    line(screen, current_color, position, (x, y))
-        # Palette
+        pygame.display.flip()
+        clock.tick(60)
 
-if choosed == "Palette":
-            # (500,180)
-            if not check:
-                panel_of_palette()
-                for block in range(4):
-                    for color in range(4):
-                        if 420+(color * 16) <= position[0] and 100+(block*16) <= position[1]:
-                            current_color = list_of_colors[block][color]
-                            # (438,59) get_pos helps
-                            pygame.draw.circle(
-                                screen, current_color, (438, 59), 7)
-                            pygame.draw.rect(
-                                screen, white, pygame.Rect(420, 100, 80, 80))
-                            check = True
-        # drawing figures
+def drawLineBetween(screen, start, end, width, color_mode):
+    c1 = max(0, min(255, 2 * start[0] - 256))
+    c2 = max(0, min(255, 2 * start[1]))
+    
+    color = color_mode
+    dx = start[0] - end[0]
+    dy = start[1] - end[1]
+    iterations = max(abs(dx), abs(dy))
+    
+    for i in range(iterations):
+        progress = 1.0 * i / iterations
+        aprogress = 1 - progress
+        x = int(aprogress * start[0] + progress * end[0])
+        y = int(aprogress * start[1] + progress * end[1])
+        pygame.draw.circle(screen, color, (x, y), width)
 
-elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                pygame.draw.rect(screen, white, pygame.Rect(0, 100, 500, 400))
-    # updating
+def drawRectangle(screen, mouse_pos, w, h, color):
+    x = mouse_pos[0]
+    y = mouse_pos[1]
+    rect = pygame.Rect(x, y, w, h)
+    pygame.draw.rect(screen, color, rect, 6)
 
-control_panel()
-pygame.display.update()
+def drawCircle(screen, mouse_pos, color):
+    x = mouse_pos[0]
+    y = mouse_pos[1]
+    pygame.draw.circle(screen, color, (x, y), 50, 6) # size and thickness
+
+main()
