@@ -73,7 +73,7 @@ while run:
     surface.blit(player, (player_x, player_y))
     surface.blit(enemy, (enemy_x, enemy_y))
     surface.blit(coin[temp], (coin_x, coin_y))
-    balance = myfont.render(f'Balance: {coins}', True, 'Orange')
+    balance = myfont.render(f'Balance: {coins}', True, 'Orange') # True - smoothing
     surface.blit(balance, (600, 10))
     
     # Work with collisions

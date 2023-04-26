@@ -39,7 +39,7 @@ def pause():
 
 # Create Playlist Box
 song_box = Listbox(root, bg="orange", fg="white", width=60, selectbackground="gray", selectforeground="black")
-song_box.pack(pady=20)
+song_box.pack(pady=20) 
 
 # Define Player Control Buttons Images
 back_button_image = PhotoImage(file='Lab7/Exercise 2/Images/back.png')

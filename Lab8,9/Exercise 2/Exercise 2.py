@@ -7,7 +7,7 @@ from pygame import mixer
 
 # Sizes
 resolution = 800
-size = 50
+size = 40
 
 # Start parametres
 x, y = randrange(0, resolution, size), randrange(0, resolution, size)
@@ -67,7 +67,7 @@ while RUN:
     y += dy * size
     snake.append((x, y))
     snake = snake[-length:]
-        
+    
     # Eating apple
     if snake[-1] == apple:
         apple = randrange(0, resolution, size), randrange(0, resolution, size)
