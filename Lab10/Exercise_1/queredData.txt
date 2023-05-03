@@ -1,4 +1,0 @@
-Name: PersonName
-Number: PhoneNumber
-Name: Maxim
-Number: 88005553335

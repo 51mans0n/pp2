@@ -78,9 +78,9 @@ flag = True
 pose1x_for_block = 9999
 pose2x_for_block = 9999
 pose3x_for_block = 9999
-pose1y_for_block = 600
-pose2y_for_block = 500
-pose3y_for_block = 400
+pose1y_for_block = 500
+pose2y_for_block = 400
+pose3y_for_block = 300
 counter = 0
 
 # Font and text characteristics
@@ -180,28 +180,34 @@ while RUN1:
                             
                             if counter == 0 and temp_blockpos_y >= 600 and (temp_blockpos_x >= 200 and temp_blockpos_x <= 500):
                                 temp = random.randint(0, 15)
-                                background_pos_y += 200
+                                background_pos_y += 100
                                 temp_blockpos_y -= 100
                                 pose1y_for_block = temp_blockpos_y
                                 pose1x_for_block = temp_blockpos_x
+                                pose3y_for_block -= 100
+                                pose2y_for_block -= 100
                                 counter += 1
                                 score += 1
                                 RUN3 = False
                             elif counter == 1 and temp_blockpos_y >= 600 and (temp_blockpos_x >= 200 and temp_blockpos_x <= 500):
                                 temp = random.randint(0, 15)
-                                background_pos_y += 200
-                                temp_blockpos_y -= 300
+                                background_pos_y += 100
+                                temp_blockpos_y -= 100
                                 pose2y_for_block = temp_blockpos_y
                                 pose2x_for_block = temp_blockpos_x
+                                pose3y_for_block -= 100
+                                pose1y_for_block -= 100
                                 counter += 1
                                 score += 1
                                 RUN3 = False
                             elif counter == 2 and temp_blockpos_y >= 600 and (temp_blockpos_x >= 200 and temp_blockpos_x <= 500):
                                 temp = random.randint(0, 15)
-                                background_pos_y += 200
-                                temp_blockpos_y -= 500
+                                background_pos_y += 100
+                                temp_blockpos_y -= 100
                                 pose3y_for_block = temp_blockpos_y
                                 pose3x_for_block = temp_blockpos_x
+                                pose1y_for_block -= 100
+                                pose2y_for_block -= 100
                                 counter = 0
                                 score += 1
                                 RUN3 = False
